@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vesta Seguros</title>
+  <link rel="stylesheet" href="../src/styles/base.css" />
+  <style>
+    :root {
+      --color-primary:       #10b981;
+      --color-primary-hover: #34d399;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       TELA 1 — WELCOME
+  ════════════════════════════════════════════════════════════════════ -->
+  <div class="screen" id="screen-welcome">
+    <div class="screen-inner">
+      <div class="welcome-app-icon">🛡️</div>
+      <h1 class="welcome-app-name">Vesta Seguros</h1>
+      <p class="welcome-tagline">Ative sua apólice digital em minutos.<br>Identidade verificada, sem burocracia.</p>
+
+      <div class="welcome-actions">
+        <button class="btn-primary" id="btn-create-account">Criar conta</button>
+        <button class="link-signin" id="btn-signin">
+          Já tem uma conta? <span>Entrar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       TELA 2 — FORM
+  ════════════════════════════════════════════════════════════════════ -->
+  <div class="screen hidden" id="screen-form">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <button class="btn-back" id="btn-form-back" aria-label="Voltar">←</button>
+        <div class="step-dots">
+          <div class="step-dot active"></div>
+          <div class="step-dot"></div>
+          <div class="step-dot"></div>
+          <div class="step-dot"></div>
+        </div>
+      </div>
+
+      <h2 class="screen-title">Vamos começar</h2>
+      <p class="screen-subtitle">Preencha seus dados para ativar sua apólice digital.</p>
+
+      <div class="form-body">
+        <form id="enroll-form" novalidate>
+          <div class="form-fields">
+            <div class="form-group">
+              <label for="fullName">Nome completo</label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="Ex: Maria Oliveira Santos"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="cpf">CPF</label>
+              <input
+                type="text"
+                id="cpf"
+                name="cpf"
+                placeholder="000.000.000-00"
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="14"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="birthDate">Data de nascimento</label>
+              <input
+                type="date"
+                id="birthDate"
+                name="birthDate"
+                required
+              />
+            </div>
+          </div>
+
+          <p class="form-footer-note">🔒 Seus dados são criptografados e nunca compartilhados.</p>
+
+          <div class="screen-cta">
+            <button type="submit" class="btn-primary" id="btn-continue">Continuar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       TELA 3 — KYC
+  ════════════════════════════════════════════════════════════════════ -->
+  <div class="screen hidden" id="screen-kyc">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <button class="btn-back" id="btn-kyc-back" aria-label="Voltar">←</button>
+        <div class="step-dots">
+          <div class="step-dot done"></div>
+          <div class="step-dot done"></div>
+          <div class="step-dot done"></div>
+          <div class="step-dot active"></div>
+        </div>
+      </div>
+
+      <h2 class="screen-title">Verificar identidade</h2>
+      <p class="screen-subtitle">Precisamos confirmar quem você é.</p>
+
+      <!-- Seção A: novo usuário -->
+      <div id="kyc-new-section">
+        <div class="kyc-cards">
+          <div class="kyc-card-option selected">
+            <span class="kyc-card-icon">🪪</span>
+            <span class="kyc-card-label">RG — Identidade Brasileira</span>
+          </div>
+          <div class="kyc-card-option">
+            <span class="kyc-card-icon">📄</span>
+            <span class="kyc-card-label">CNH — Carteira de Motorista</span>
+          </div>
+        </div>
+
+        <div class="kyc-or-row">ou</div>
+        <button class="kyc-passport-link">Usar Passaporte</button>
+
+        <p class="kyc-note">Fotos processadas com segurança e deletadas após verificação.</p>
+
+        <div class="screen-cta">
+          <button class="btn-primary" id="btn-start-verification">Iniciar verificação</button>
+        </div>
+      </div>
+
+      <!-- Seção B: usuário com VC -->
+      <div id="kyc-has-vc-section" class="hidden">
+        <div class="kyc-vc-card">
+          <span class="kyc-vc-icon">⚡</span>
+          <div>
+            <p class="kyc-vc-title">Identidade Vesta detectada</p>
+            <p class="kyc-vc-subtitle">Seu histórico de KYC já está salvo neste dispositivo.</p>
+          </div>
+        </div>
+
+        <div class="screen-cta">
+          <button class="btn-primary" id="btn-skip-kyc">Pular KYC e validar com Vesta</button>
+        </div>
+      </div>
+
+      <!-- Seção C: animação -->
+      <div id="kyc-animation-section" class="hidden">
+        <p class="kyc-anim-title">Simulando KYC...</p>
+
+        <div class="kyc-steps">
+          <div class="kyc-step" id="kyc-step-1">
+            <div class="step-indicator" id="kyc-ind-1">1</div>
+            <span class="step-label">Verificando dados pessoais</span>
+          </div>
+          <div class="kyc-step" id="kyc-step-2">
+            <div class="step-indicator" id="kyc-ind-2">2</div>
+            <span class="step-label">Analisando documento</span>
+          </div>
+          <div class="kyc-step" id="kyc-step-3">
+            <div class="step-indicator" id="kyc-ind-3">3</div>
+            <span class="step-label">Emitindo credencial Vesta</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error banner (shared, aparece no bottom) -->
+      <div class="error-banner hidden" id="error-banner">
+        <span class="error-icon">⚠️</span>
+        <span id="error-message">Ocorreu um erro. Tente novamente.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       TELA 4 — SUCCESS
+  ════════════════════════════════════════════════════════════════════ -->
+  <div class="screen hidden" id="screen-success">
+    <div class="screen-inner">
+      <div class="success-check">✓</div>
+      <h2 class="success-title" id="success-title">Tudo certo!</h2>
+      <p class="success-subtitle" id="success-subtitle">Sua identidade foi verificada com sucesso.</p>
+
+      <div class="info-card">
+        <div class="info-row">
+          <span class="label">Credencial</span>
+          <span class="value" id="vc-hash">—</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Status</span>
+          <span class="badge badge-green" id="status-badge">✓ Verificado</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Tipo</span>
+          <span class="badge" id="type-badge">—</span>
+        </div>
+        <div class="info-row hidden" id="tx-row">
+          <span class="label">TX Stellar</span>
+          <span class="value" id="tx-hash">—</span>
+        </div>
+        <div class="info-row hidden" id="mock-row">
+          <span class="label">Modo</span>
+          <span class="badge badge-mock">🧪 MOCK</span>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="window.location.href='/'">Voltar ao início</button>
+
+      <p class="success-footer">Verificado por Vesta · Stellar Testnet</p>
+    </div>
+  </div>
+
+  <script type="module" src="../src/client2.ts"></script>
+</body>
+</html>
