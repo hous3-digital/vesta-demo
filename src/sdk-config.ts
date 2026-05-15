@@ -1,9 +1,9 @@
 /**
  * Fábrica de instâncias do VestaSDK para o demo.
  *
- * Centraliza a configuração de conexão com a vesta-api-stellar rodando
- * localmente em modo mock. Em produção, substitua `apiUrl` e `apiKey`
- * pelas credenciais reais do integrador.
+ * Centraliza a configuração de conexão com a vesta-api rodando
+ * localmente em modo mock. Em produção, substitua `apiKey`
+ * pela chave real do integrador.
  */
 import { VestaSDK } from '@hous3-digital/vesta-sdk';
 
@@ -21,7 +21,6 @@ import { VestaSDK } from '@hous3-digital/vesta-sdk';
  */
 export function createSDK(issuerId: string): VestaSDK {
   return new VestaSDK({
-    apiUrl: 'http://localhost:3000/api/v1',
     apiKey: 'dev-secret-key',
     issuerId,
   });
