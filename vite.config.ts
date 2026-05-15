@@ -2,13 +2,6 @@ import { defineConfig } from 'vite';
 import path from 'path';
 
 export default defineConfig({
-  resolve: {
-    alias: {
-      // Aponta o import do SDK direto para o source TypeScript
-      // Evita precisar fazer build do SDK antes de rodar o demo
-      '@hous3-digital/vesta-sdk': path.resolve(__dirname, '../vesta-sdk/app/src/index.ts'),
-    },
-  },
   build: {
     rollupOptions: {
       input: {
