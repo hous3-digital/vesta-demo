@@ -74,11 +74,11 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
   const kycNewSection      = document.getElementById('kyc-new-section')       as HTMLDivElement;
   const kycHasVcSection    = document.getElementById('kyc-has-vc-section')    as HTMLDivElement;
   const kycAnimSection     = document.getElementById('kyc-animation-section') as HTMLDivElement;
+  const kycIframeSection   = document.getElementById('kyc-iframe-section')    as HTMLDivElement;
+  const kycIframe          = document.getElementById('kyc-iframe')            as HTMLIFrameElement;
   const btnStartVerif      = document.getElementById('btn-start-verification') as HTMLButtonElement;
   const btnSkipKyc         = document.getElementById('btn-skip-kyc')           as HTMLButtonElement;
-
-  // KYC option cards (cosmetic selection)
-  const kycCards = document.querySelectorAll<HTMLDivElement>('.kyc-card-option');
+  const btnSkipKycDemo     = document.getElementById('btn-skip-kyc-demo')      as HTMLButtonElement;
 
   // KYC animation steps
   const kycStep1 = document.getElementById('kyc-step-1') as HTMLDivElement;
@@ -160,13 +160,20 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
     await sleep(600);
   }
 
+  // ─── IdCerberus KYC URL ───────────────────────────────────────────────────
+  const KYC_IFRAME_URL = 'https://sdk-hml.idcerberus.com/?product=vesta';
+
   // ─── initKycScreen ────────────────────────────────────────────────────────
 
   async function initKycScreen(): Promise<void> {
     kycNewSection.classList.add('hidden');
     kycHasVcSection.classList.add('hidden');
     kycAnimSection.classList.add('hidden');
+    kycIframeSection.classList.add('hidden');
     hideError();
+
+    // Clear iframe src when not in use
+    kycIframe.src = '';
 
     try {
       const hasVC = await sdk.hasStoredCredential();
@@ -177,6 +184,27 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
       }
     } catch {
       kycNewSection.classList.remove('hidden');
+    }
+  }
+
+  // ─── KYC completion handler ─────────────────────────────────────────────
+
+  async function onKycComplete(): Promise<void> {
+    // Hide iframe, show animation for credential issuance
+    kycIframeSection.classList.add('hidden');
+    kycAnimSection.classList.remove('hidden');
+
+    startKycAnimation();
+
+    try {
+      const result = await runSmartEnroll();
+      await finishKycAnimation();
+      showSuccess(result);
+    } catch (err) {
+      kycAnimSection.classList.add('hidden');
+      kycNewSection.classList.remove('hidden');
+      const msg = err instanceof Error ? err.message : 'Erro desconhecido.';
+      showError(msg);
     }
   }
 
@@ -290,32 +318,41 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
     showScreen('form');
   });
 
-  // KYC card cosmetic selection
-  kycCards.forEach(card => {
-    card.addEventListener('click', () => {
-      kycCards.forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-    });
-  });
-
-  // Start verification (new user path)
-  btnStartVerif.addEventListener('click', async () => {
+  // Start verification → open IdCerberus iframe
+  btnStartVerif.addEventListener('click', () => {
     kycNewSection.classList.add('hidden');
-    kycAnimSection.classList.remove('hidden');
+    kycIframeSection.classList.remove('hidden');
     hideError();
 
-    startKycAnimation();
+    // Load the IdCerberus KYC SDK
+    kycIframe.src = KYC_IFRAME_URL;
+  });
 
-    try {
-      const result = await runSmartEnroll();
-      await finishKycAnimation();
-      showSuccess(result);
-    } catch (err) {
-      kycAnimSection.classList.add('hidden');
-      kycNewSection.classList.remove('hidden');
-      const msg = err instanceof Error ? err.message : 'Erro desconhecido.';
-      showError(msg);
+  // Listen for postMessage from IdCerberus iframe
+  window.addEventListener('message', (event: MessageEvent) => {
+    // Only accept messages from the IdCerberus origin
+    if (!event.origin.includes('idcerberus.com')) return;
+
+    console.log('[Vesta] IdCerberus postMessage:', event.data);
+
+    // The IdCerberus SDK may send completion events in various formats.
+    // We handle common patterns:
+    const data = event.data;
+    if (
+      data === 'kyc_complete' ||
+      data === 'complete' ||
+      data?.status === 'complete' ||
+      data?.status === 'approved' ||
+      data?.type === 'kyc_complete' ||
+      data?.event === 'complete'
+    ) {
+      onKycComplete();
     }
+  });
+
+  // Skip KYC (demo fallback) — proceeds without real KYC
+  btnSkipKycDemo.addEventListener('click', async () => {
+    onKycComplete();
   });
 
   // Skip KYC (has-VC path)

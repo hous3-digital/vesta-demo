@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Banco Vesta Digital</title>
+  <title>Brava — Digital Bank</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../src/styles/base.css" />
   <style>
     :root {
-      --color-primary:       #6366f1;
-      --color-primary-hover: #818cf8;
+      --color-primary:       #E54530;
+      --color-primary-hover: #FF5A45;
     }
   </style>
 </head>
@@ -20,8 +23,8 @@
   <div class="screen" id="screen-welcome">
     <div class="screen-inner">
       <div class="welcome-app-icon">🏦</div>
-      <h1 class="welcome-app-name">Banco Vesta Digital</h1>
-      <p class="welcome-tagline">Abra sua conta em segundos.<br>Seguro, portável e sem burocracia.</p>
+      <h1 class="welcome-app-name">brava</h1>
+      <p class="welcome-tagline">Abra sua conta em segundos.<br>Seguro, portátil e sem burocracia.</p>
 
       <div class="welcome-actions">
         <button class="btn-primary" id="btn-create-account">Criar conta</button>
@@ -118,26 +121,35 @@
       <h2 class="screen-title">Verificar identidade</h2>
       <p class="screen-subtitle">Precisamos confirmar quem você é.</p>
 
-      <!-- Seção A: novo usuário -->
+      <!-- Seção A: novo usuário — botão para iniciar KYC -->
       <div id="kyc-new-section">
-        <div class="kyc-cards">
-          <div class="kyc-card-option selected">
-            <span class="kyc-card-icon">🪪</span>
-            <span class="kyc-card-label">RG — Identidade Brasileira</span>
-          </div>
-          <div class="kyc-card-option">
-            <span class="kyc-card-icon">📄</span>
-            <span class="kyc-card-label">CNH — Carteira de Motorista</span>
+        <div class="kyc-intro-card">
+          <span class="kyc-intro-icon">🔐</span>
+          <div>
+            <p class="kyc-intro-title">Verificação de identidade</p>
+            <p class="kyc-intro-subtitle">Vamos confirmar sua identidade com documento e selfie via IdCerberus.</p>
           </div>
         </div>
-
-        <div class="kyc-or-row">ou</div>
-        <button class="kyc-passport-link">Usar Passaporte</button>
 
         <p class="kyc-note">Fotos processadas com segurança e deletadas após verificação.</p>
 
         <div class="screen-cta">
           <button class="btn-primary" id="btn-start-verification">Iniciar verificação</button>
+        </div>
+      </div>
+
+      <!-- Seção A2: iframe do IdCerberus -->
+      <div id="kyc-iframe-section" class="hidden">
+        <div class="kyc-iframe-wrapper">
+          <iframe
+            id="kyc-iframe"
+            src=""
+            allow="camera; microphone"
+            style="width:100%; height:520px; border:none; border-radius:var(--radius); background:var(--surface-2);"
+          ></iframe>
+        </div>
+        <div class="screen-cta" style="margin-top:12px;">
+          <button class="btn-secondary" id="btn-skip-kyc-demo">Pular KYC (demo)</button>
         </div>
       </div>
 

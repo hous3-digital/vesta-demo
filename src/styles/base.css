@@ -2,14 +2,14 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:             #0a0a0f;
-  --surface:        #111118;
-  --surface-2:      #18181f;
-  --border:         rgba(255,255,255,0.07);
-  --border-strong:  rgba(255,255,255,0.13);
-  --text:           #f0f0f8;
-  --text-secondary: rgba(240,240,248,0.60);
-  --text-muted:     rgba(240,240,248,0.35);
+  --bg:             #0B0907;
+  --surface:        #151210;
+  --surface-2:      #1A1714;
+  --border:         rgba(255,255,255,0.08);
+  --border-strong:  rgba(255,255,255,0.14);
+  --text:           #F5F0EB;
+  --text-secondary: rgba(245,240,235,0.55);
+  --text-muted:     rgba(245,240,235,0.30);
   --radius:         14px;
   --radius-lg:      22px;
   /* --color-primary is set per-client in their HTML */
@@ -20,7 +20,7 @@ html, body {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
@@ -110,10 +110,12 @@ body {
 }
 
 .welcome-app-name {
-  font-size: 28px;
-  font-weight: 700;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 32px;
+  font-weight: 400;
+  font-style: italic;
   color: var(--text);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   margin-bottom: 8px;
 }
 
@@ -148,10 +150,11 @@ body {
 
 /* ─── Form Screen ───────────────────────────────────────────────────────── */
 .screen-title {
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--text);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   margin-bottom: 6px;
 }
 
@@ -270,74 +273,67 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 /* ─── KYC Screen ────────────────────────────────────────────────────────── */
-.kyc-cards {
+
+/* Intro card */
+.kyc-intro-card {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  border: 1.5px solid rgba(from var(--color-primary) r g b / 0.25);
+  border-radius: var(--radius);
+  background: rgba(from var(--color-primary) r g b / 0.06);
   margin-bottom: 20px;
 }
 
-.kyc-card-option {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  border: 1.5px solid var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--surface);
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
-}
-
-.kyc-card-option:hover {
-  border-color: var(--color-primary);
-  background: var(--surface-2);
-}
-
-.kyc-card-option.selected {
-  border-color: var(--color-primary);
-  background: var(--surface-2);
-}
-
-.kyc-card-icon {
+.kyc-intro-icon {
   font-size: 24px;
   flex-shrink: 0;
 }
 
-.kyc-card-label {
+.kyc-intro-title {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text);
+  margin-bottom: 4px;
 }
 
-.kyc-or-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+.kyc-intro-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Iframe wrapper */
+.kyc-iframe-wrapper {
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+/* Skip KYC (demo) button */
+.btn-secondary {
+  width: 100%;
+  padding: 12px 24px;
+  background: transparent;
   color: var(--text-muted);
-  font-size: 12px;
-}
-
-.kyc-or-row::before,
-.kyc-or-row::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
-.kyc-passport-link {
-  background: none;
-  border: none;
-  color: var(--color-primary);
+  border: 1.5px solid var(--border-strong);
+  border-radius: 100px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  padding: 0;
-  text-align: center;
-  width: 100%;
-  margin-bottom: 20px;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-secondary:hover {
+  color: var(--text-secondary);
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.03);
 }
 
 .kyc-note {
@@ -478,10 +474,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .success-title {
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--text);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   margin-bottom: 8px;
 }
 
@@ -521,7 +518,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-weight: 600;
   color: var(--text);
   font-size: 12px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
   max-width: 180px;
   overflow: hidden;
   text-overflow: ellipsis;
