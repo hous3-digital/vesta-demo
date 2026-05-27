@@ -1,8 +1,8 @@
 /**
- * enrollment.ts — Lógica compartilhada do fluxo de cadastro
+ * enrollment.ts — Shared enrollment flow logic
  *
- * Importado por client1.ts e client2.ts. Recebe config e conduz o
- * usuário pelas 4 telas: Welcome → Form → KYC → Success.
+ * Imported by client1.ts and client2.ts. Takes config and guides the
+ * user through 4 screens: Welcome → Form → KYC → Success.
  */
 
 import { VestaSDK } from '@hous3-digital/vesta-sdk';
@@ -14,7 +14,7 @@ export interface EnrollmentConfig {
   minKycLevel: number;
 }
 
-// ─── Helpers de formatação ─────────────────────────────────────────────────
+// ─── Formatting helpers ───────────────────────────────────────────────────
 
 function maskCpf(value: string): string {
   return value
@@ -34,7 +34,7 @@ function cleanBirthDate(value: string): string {
   return value.replace(/-/g, '');
 }
 
-/** Maiúsculas sem acentos */
+/** Uppercase without accents */
 function normalizeFullName(value: string): string {
   return value
     .toUpperCase()
@@ -203,7 +203,7 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
     } catch (err) {
       kycAnimSection.classList.add('hidden');
       kycNewSection.classList.remove('hidden');
-      const msg = err instanceof Error ? err.message : 'Erro desconhecido.';
+      const msg = err instanceof Error ? err.message : 'Unknown error.';
       showError(msg);
     }
   }
@@ -215,18 +215,18 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
       h.length > 16 ? `${h.slice(0, 8)}...${h.slice(-8)}` : h;
 
     elVcHash.textContent = truncHash(result.vcHash);
-    elStatusBadge.textContent = '✓ Verificado';
+    elStatusBadge.textContent = '✓ Verified';
     elStatusBadge.className = 'badge badge-green';
 
     if (result.isNewUser) {
-      elSuccessTitle.textContent    = 'Tudo certo!';
-      elSuccessSubtitle.textContent = 'Sua identidade foi verificada e sua credencial Vesta foi criada.';
-      elTypeBadge.textContent       = '🆕 Nova credencial';
+      elSuccessTitle.textContent    = 'All set!';
+      elSuccessSubtitle.textContent = 'Your identity has been verified and your Vesta credential was created.';
+      elTypeBadge.textContent       = '🆕 New credential';
       elTypeBadge.className         = 'badge badge-yellow';
     } else {
-      elSuccessTitle.textContent    = 'Identidade portada!';
-      elSuccessSubtitle.textContent = 'Sua credencial Vesta existente foi validada. KYC pulado com sucesso!';
-      elTypeBadge.textContent       = '♻️ Credencial portada';
+      elSuccessTitle.textContent    = 'Identity ported!';
+      elSuccessSubtitle.textContent = 'Your existing Vesta credential was validated. KYC skipped successfully!';
+      elTypeBadge.textContent       = '♻️ Ported credential';
       elTypeBadge.className         = 'badge badge-green';
     }
 
@@ -300,9 +300,9 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
     const cpf       = cleanCpf(inputCpf.value);
     const birthDate = inputBirth.value;
 
-    if (!fullName)          { showError('Informe seu nome completo.');        return; }
-    if (cpf.length !== 11)  { showError('CPF inválido. Informe 11 dígitos.'); return; }
-    if (!birthDate)         { showError('Informe sua data de nascimento.');    return; }
+    if (!fullName)          { showError('Please enter your full name.');       return; }
+    if (cpf.length !== 11)  { showError('Invalid CPF. Enter 11 digits.');      return; }
+    if (!birthDate)         { showError('Please enter your date of birth.');   return; }
 
     savedFullName  = fullName;
     savedCpf       = cpf;
@@ -359,7 +359,7 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
   btnSkipKyc.addEventListener('click', async () => {
     btnSkipKyc.disabled = true;
     const originalContent = btnSkipKyc.innerHTML;
-    btnSkipKyc.innerHTML = '<div class="spinner"></div> Validando...';
+    btnSkipKyc.innerHTML = '<div class="spinner"></div> Validating...';
     hideError();
 
     try {
@@ -368,7 +368,7 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
     } catch (err) {
       btnSkipKyc.disabled = false;
       btnSkipKyc.innerHTML = originalContent;
-      const msg = err instanceof Error ? err.message : 'Erro desconhecido.';
+      const msg = err instanceof Error ? err.message : 'Unknown error.';
       showError(msg);
     }
   });

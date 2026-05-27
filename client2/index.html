@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,30 +18,30 @@
 <body>
 
   <!-- ════════════════════════════════════════════════════════════════════
-       TELA 1 — WELCOME
+       SCREEN 1 — WELCOME
   ════════════════════════════════════════════════════════════════════ -->
   <div class="screen" id="screen-welcome">
     <div class="screen-inner">
       <div class="welcome-app-icon">🛡️</div>
       <h1 class="welcome-app-name">trove</h1>
-      <p class="welcome-tagline">Ative sua apólice digital em minutos.<br>Identidade verificada, sem burocracia.</p>
+      <p class="welcome-tagline">Activate your digital policy in minutes.<br>Verified identity, zero hassle.</p>
 
       <div class="welcome-actions">
-        <button class="btn-primary" id="btn-create-account">Criar conta</button>
+        <button class="btn-primary" id="btn-create-account">Create account</button>
         <button class="link-signin" id="btn-signin">
-          Já tem uma conta? <span>Entrar</span>
+          Already have an account? <span>Sign in</span>
         </button>
       </div>
     </div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════════════════
-       TELA 2 — FORM
+       SCREEN 2 — FORM
   ════════════════════════════════════════════════════════════════════ -->
   <div class="screen hidden" id="screen-form">
     <div class="screen-inner">
       <div class="screen-header">
-        <button class="btn-back" id="btn-form-back" aria-label="Voltar">←</button>
+        <button class="btn-back" id="btn-form-back" aria-label="Back">←</button>
         <div class="step-dots">
           <div class="step-dot active"></div>
           <div class="step-dot"></div>
@@ -50,19 +50,19 @@
         </div>
       </div>
 
-      <h2 class="screen-title">Vamos começar</h2>
-      <p class="screen-subtitle">Preencha seus dados para ativar sua apólice digital.</p>
+      <h2 class="screen-title">Let's get started</h2>
+      <p class="screen-subtitle">Fill in your details to activate your digital policy.</p>
 
       <div class="form-body">
         <form id="enroll-form" novalidate>
           <div class="form-fields">
             <div class="form-group">
-              <label for="fullName">Nome completo</label>
+              <label for="fullName">Full name</label>
               <input
                 type="text"
                 id="fullName"
                 name="fullName"
-                placeholder="Ex: Maria Oliveira Santos"
+                placeholder="e.g. Maria Oliveira"
                 autocomplete="name"
                 required
               />
@@ -83,7 +83,7 @@
             </div>
 
             <div class="form-group">
-              <label for="birthDate">Data de nascimento</label>
+              <label for="birthDate">Date of birth</label>
               <input
                 type="date"
                 id="birthDate"
@@ -93,10 +93,10 @@
             </div>
           </div>
 
-          <p class="form-footer-note">🔒 Seus dados são criptografados e nunca compartilhados.</p>
+          <p class="form-footer-note">🔒 Your data is encrypted and never shared.</p>
 
           <div class="screen-cta">
-            <button type="submit" class="btn-primary" id="btn-continue">Continuar</button>
+            <button type="submit" class="btn-primary" id="btn-continue">Continue</button>
           </div>
         </form>
       </div>
@@ -104,12 +104,12 @@
   </div>
 
   <!-- ════════════════════════════════════════════════════════════════════
-       TELA 3 — KYC
+       SCREEN 3 — KYC
   ════════════════════════════════════════════════════════════════════ -->
   <div class="screen hidden" id="screen-kyc">
     <div class="screen-inner">
       <div class="screen-header">
-        <button class="btn-back" id="btn-kyc-back" aria-label="Voltar">←</button>
+        <button class="btn-back" id="btn-kyc-back" aria-label="Back">←</button>
         <div class="step-dots">
           <div class="step-dot done"></div>
           <div class="step-dot done"></div>
@@ -118,27 +118,27 @@
         </div>
       </div>
 
-      <h2 class="screen-title">Verificar identidade</h2>
-      <p class="screen-subtitle">Precisamos confirmar quem você é.</p>
+      <h2 class="screen-title">Verify identity</h2>
+      <p class="screen-subtitle">We need to confirm who you are.</p>
 
-      <!-- Seção A: novo usuário — botão para iniciar KYC -->
+      <!-- Section A: new user — button to start KYC -->
       <div id="kyc-new-section">
         <div class="kyc-intro-card">
           <span class="kyc-intro-icon">🔐</span>
           <div>
-            <p class="kyc-intro-title">Verificação de identidade</p>
-            <p class="kyc-intro-subtitle">Vamos confirmar sua identidade com documento e selfie via IdCerberus.</p>
+            <p class="kyc-intro-title">Identity verification</p>
+            <p class="kyc-intro-subtitle">We'll verify your identity with a document and selfie via IdCerberus.</p>
           </div>
         </div>
 
-        <p class="kyc-note">Fotos processadas com segurança e deletadas após verificação.</p>
+        <p class="kyc-note">Photos are securely processed and deleted after verification.</p>
 
         <div class="screen-cta">
-          <button class="btn-primary" id="btn-start-verification">Iniciar verificação</button>
+          <button class="btn-primary" id="btn-start-verification">Start verification</button>
         </div>
       </div>
 
-      <!-- Seção A2: iframe do IdCerberus -->
+      <!-- Section A2: IdCerberus iframe -->
       <div id="kyc-iframe-section" class="hidden">
         <div class="kyc-iframe-wrapper">
           <iframe
@@ -149,88 +149,88 @@
           ></iframe>
         </div>
         <div class="screen-cta" style="margin-top:12px;">
-          <button class="btn-secondary" id="btn-skip-kyc-demo">Pular KYC (demo)</button>
+          <button class="btn-secondary" id="btn-skip-kyc-demo">Skip KYC (demo)</button>
         </div>
       </div>
 
-      <!-- Seção B: usuário com VC -->
+      <!-- Section B: user with existing VC -->
       <div id="kyc-has-vc-section" class="hidden">
         <div class="kyc-vc-card">
           <span class="kyc-vc-icon">⚡</span>
           <div>
-            <p class="kyc-vc-title">Identidade Vesta detectada</p>
-            <p class="kyc-vc-subtitle">Seu histórico de KYC já está salvo neste dispositivo.</p>
+            <p class="kyc-vc-title">Vesta identity detected</p>
+            <p class="kyc-vc-subtitle">Your KYC history is already saved on this device.</p>
           </div>
         </div>
 
         <div class="screen-cta">
-          <button class="btn-primary" id="btn-skip-kyc">Pular KYC e validar com Vesta</button>
+          <button class="btn-primary" id="btn-skip-kyc">Skip KYC and validate with Vesta</button>
         </div>
       </div>
 
-      <!-- Seção C: animação -->
+      <!-- Section C: animation -->
       <div id="kyc-animation-section" class="hidden">
-        <p class="kyc-anim-title">Simulando KYC...</p>
+        <p class="kyc-anim-title">Validating credential...</p>
 
         <div class="kyc-steps">
           <div class="kyc-step" id="kyc-step-1">
             <div class="step-indicator" id="kyc-ind-1">1</div>
-            <span class="step-label">Verificando dados pessoais</span>
+            <span class="step-label">Verifying personal data</span>
           </div>
           <div class="kyc-step" id="kyc-step-2">
             <div class="step-indicator" id="kyc-ind-2">2</div>
-            <span class="step-label">Analisando documento</span>
+            <span class="step-label">Analyzing document</span>
           </div>
           <div class="kyc-step" id="kyc-step-3">
             <div class="step-indicator" id="kyc-ind-3">3</div>
-            <span class="step-label">Emitindo credencial Vesta</span>
+            <span class="step-label">Issuing Vesta credential</span>
           </div>
         </div>
       </div>
 
-      <!-- Error banner (shared, aparece no bottom) -->
+      <!-- Error banner -->
       <div class="error-banner hidden" id="error-banner">
         <span class="error-icon">⚠️</span>
-        <span id="error-message">Ocorreu um erro. Tente novamente.</span>
+        <span id="error-message">An error occurred. Please try again.</span>
       </div>
     </div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════════════════
-       TELA 4 — SUCCESS
+       SCREEN 4 — SUCCESS
   ════════════════════════════════════════════════════════════════════ -->
   <div class="screen hidden" id="screen-success">
     <div class="screen-inner">
       <div class="success-check">✓</div>
-      <h2 class="success-title" id="success-title">Tudo certo!</h2>
-      <p class="success-subtitle" id="success-subtitle">Sua identidade foi verificada com sucesso.</p>
+      <h2 class="success-title" id="success-title">All set!</h2>
+      <p class="success-subtitle" id="success-subtitle">Your identity has been successfully verified.</p>
 
       <div class="info-card">
         <div class="info-row">
-          <span class="label">Credencial</span>
+          <span class="label">Credential</span>
           <span class="value" id="vc-hash">—</span>
         </div>
         <div class="info-row">
           <span class="label">Status</span>
-          <span class="badge badge-green" id="status-badge">✓ Verificado</span>
+          <span class="badge badge-green" id="status-badge">✓ Verified</span>
         </div>
         <div class="info-row">
-          <span class="label">Tipo</span>
+          <span class="label">Type</span>
           <span class="badge" id="type-badge">—</span>
         </div>
         <div class="info-row hidden" id="tx-row">
-          <span class="label">TX Stellar</span>
+          <span class="label">Stellar TX</span>
           <span class="value" id="tx-hash">—</span>
         </div>
         <div class="info-row hidden" id="mock-row">
-          <span class="label">Modo</span>
+          <span class="label">Mode</span>
           <span class="badge badge-mock">🧪 MOCK</span>
         </div>
       </div>
 
-      <button class="btn-primary" onclick="window.location.href='/'">Voltar ao início</button>
+      <button class="btn-primary" onclick="window.location.href='/'">Back to home</button>
 
-      <p class="success-footer">Verificado por Vesta · Stellar Testnet</p>
+      <p class="success-footer">Verified by Vesta · Stellar Testnet</p>
     </div>
   </div>
 
