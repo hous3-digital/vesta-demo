@@ -13,6 +13,6 @@
     "vite": "^5.2.0"
   },
   "dependencies": {
-    "@hous3-digital/vesta-sdk": "^1.1.2"
+    "@hous3-digital/vesta-sdk": "^1.2.1"
   }
 }

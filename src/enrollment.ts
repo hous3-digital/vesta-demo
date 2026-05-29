@@ -5,7 +5,7 @@
  * user through 4 screens: Welcome → Form → KYC → Success.
  */
 
-import { VestaSDK } from '@hous3-digital/vesta-sdk';
+import { VestaSDK, VestaSDKError } from '@hous3-digital/vesta-sdk';
 import type { SmartEnrollResult } from '@hous3-digital/vesta-sdk';
 
 export interface EnrollmentConfig {
@@ -45,6 +45,20 @@ function normalizeFullName(value: string): string {
 }
 
 const sleep = (ms: number) => new Promise<void>(r => setTimeout(r, ms));
+
+/** Traduz erros do SDK para mensagens legíveis ao usuário. */
+function resolveErrorMessage(err: unknown): string {
+  if (err instanceof VestaSDKError) {
+    if (err.statusCode === 409) {
+      // CPF já tem credencial ativa em outro dispositivo
+      return err.apiMessage;
+    }
+    if (err.statusCode === 401) return 'Chave de API inválida. Contate o suporte.';
+    if (err.statusCode === 400) return `Dados inválidos: ${err.apiMessage}`;
+    return `Erro da API (${err.statusCode}): ${err.apiMessage}`;
+  }
+  return err instanceof Error ? err.message : 'Erro desconhecido.';
+}
 
 // ─── Main export ───────────────────────────────────────────────────────────
 
@@ -368,8 +382,7 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
     } catch (err) {
       btnSkipKyc.disabled = false;
       btnSkipKyc.innerHTML = originalContent;
-      const msg = err instanceof Error ? err.message : 'Unknown error.';
-      showError(msg);
+      showError(resolveErrorMessage(err));
     }
   });
 }

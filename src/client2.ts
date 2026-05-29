@@ -1,10 +1,10 @@
 import { createSDK } from './sdk-config';
 import { initEnrollmentFlow } from './enrollment';
 
-const sdk = createSDK('vesta_seguros');
+const sdk = createSDK('trove_demo');
 
 initEnrollmentFlow({
   sdk,
-  verifierId: 'verifier_vesta_seguros',
+  verifierId: 'verifier_trove',
   minKycLevel: 2,
 });

@@ -1,10 +1,10 @@
 import { createSDK } from './sdk-config';
 import { initEnrollmentFlow } from './enrollment';
 
-const sdk = createSDK('banco_vesta_digital');
+const sdk = createSDK('brava_demo');
 
 initEnrollmentFlow({
   sdk,
-  verifierId: 'verifier_banco_vesta_digital',
+  verifierId: 'verifier_brava',
   minKycLevel: 2,
 });
