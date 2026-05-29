@@ -187,6 +187,9 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
     screenKyc.classList.remove('kyc-iframe-active');
     hideError();
 
+    // Reset completion guard
+    kycCompleteScheduled = false;
+
     // Clear iframe src when not in use
     kycIframe.src = '';
 
@@ -346,24 +349,24 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
   });
 
   // Listen for postMessage from IdCerberus iframe
+  let kycCompleteScheduled = false;
+
+  function scheduleKycComplete(delayMs = 2000): void {
+    if (kycCompleteScheduled) return; // fire only once
+    kycCompleteScheduled = true;
+    setTimeout(() => {
+      kycCompleteScheduled = false;
+      onKycComplete();
+    }, delayMs);
+  }
+
   window.addEventListener('message', (event: MessageEvent) => {
-    // Only accept messages from the IdCerberus origin
     if (!event.origin.includes('idcerberus.com')) return;
 
     console.log('[Vesta] IdCerberus postMessage:', event.data);
 
-    // The IdCerberus SDK may send completion events in various formats.
-    // We handle common patterns:
-    const data = event.data;
-    if (
-      data === 'kyc_complete' ||
-      data === 'complete' ||
-      data?.status === 'complete' ||
-      data?.status === 'approved' ||
-      data?.type === 'kyc_complete' ||
-      data?.event === 'complete'
-    ) {
-      onKycComplete();
+    if (event.data?.status === 'finished') {
+      scheduleKycComplete(2000);
     }
   });
 
