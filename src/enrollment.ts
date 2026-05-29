@@ -365,7 +365,7 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
 
     console.log('[Vesta] IdCerberus postMessage:', event.data);
 
-    if (event.data?.status === 'finished') {
+    if (event.data?.message === 'success') {
       scheduleKycComplete(2000);
     }
   });
