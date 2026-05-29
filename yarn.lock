@@ -7,10 +7,10 @@
   resolved "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.21.5.tgz"
   integrity sha512-tQd/1efJuzPC6rCFwEvLtci/xNFcTZknmXs98FYDfGE4wP9ClFV98nyKrzJKVPMhdDnjzLhdUyMX4PsQAPjwIw==
 
-"@hous3-digital/vesta-sdk@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.npmjs.org/@hous3-digital/vesta-sdk/-/vesta-sdk-1.2.1.tgz"
-  integrity sha512-mvAkAN2F8leOe2sK600cdELeKTDyII9oJDIH/ngztp883lC2rykvT8dJWBBQT78ohEaOs3gfS3ae0eyWG9N94w==
+"@hous3-digital/vesta-sdk@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.npmjs.org/@hous3-digital/vesta-sdk/-/vesta-sdk-1.3.0.tgz"
+  integrity sha512-B1HUH4MBo5v4Rmz+fTcAcHnFEaiSihiJBPn6mRkM7ed/Wq4ssT6rLpatfOyPUoVuW46t5rLmsXFgVmi6aZBkrw==
 
 "@rollup/rollup-win32-x64-gnu@4.60.3":
   version "4.60.3"
