@@ -312,6 +312,49 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background: var(--surface-2);
 }
 
+/* Iframe element — default height used when not in full-height mode */
+#kyc-iframe {
+  width: 100%;
+  height: 520px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  display: block;
+}
+
+/* ── Iframe full-height mode ──────────────────────────────────────────────
+   Activated by JS (.kyc-iframe-active on #screen-kyc) when the user starts
+   verification. Hides title/subtitle and stretches the iframe to fill the
+   entire fixed-position screen so IdCerberus has a proper full-screen
+   viewport — prevents the internal SPA from clipping content. */
+.kyc-iframe-active .screen-inner {
+  height: calc(100dvh - 48px);
+  min-height: unset;
+}
+
+.kyc-iframe-active .screen-title,
+.kyc-iframe-active .screen-subtitle {
+  display: none;
+}
+
+.kyc-iframe-active #kyc-iframe-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.kyc-iframe-active .kyc-iframe-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.kyc-iframe-active #kyc-iframe {
+  flex: 1;
+  height: 100%;
+}
+
 /* Skip KYC (demo) button */
 .btn-secondary {
   width: 100%;

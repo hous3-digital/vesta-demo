@@ -184,6 +184,7 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
     kycHasVcSection.classList.add('hidden');
     kycAnimSection.classList.add('hidden');
     kycIframeSection.classList.add('hidden');
+    screenKyc.classList.remove('kyc-iframe-active');
     hideError();
 
     // Clear iframe src when not in use
@@ -206,6 +207,7 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
   async function onKycComplete(): Promise<void> {
     // Hide iframe, show animation for credential issuance
     kycIframeSection.classList.add('hidden');
+    screenKyc.classList.remove('kyc-iframe-active');
     kycAnimSection.classList.remove('hidden');
 
     startKycAnimation();
@@ -332,10 +334,11 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
     showScreen('form');
   });
 
-  // Start verification → open IdCerberus iframe
+  // Start verification → open IdCerberus iframe (full-height mode)
   btnStartVerif.addEventListener('click', () => {
     kycNewSection.classList.add('hidden');
     kycIframeSection.classList.remove('hidden');
+    screenKyc.classList.add('kyc-iframe-active');
     hideError();
 
     // Load the IdCerberus KYC SDK
