@@ -4,7 +4,7 @@
  * A API key é lida da env var VITE_VESTA_API_KEY, configurada
  * no .env local ou nas Environment Variables da Vercel.
  */
-import { VestaSDK } from '@hous3-digital/vesta-sdk';
+import { VestaSDK, VestaEnvironment } from '@hous3-digital/vesta-sdk';
 
 const API_KEY = import.meta.env.VITE_VESTA_API_KEY as string | undefined;
 
@@ -31,5 +31,6 @@ export function createSDK(issuerId: string): VestaSDK {
   return new VestaSDK({
     apiKey: API_KEY,
     issuerId,
+    environment: VestaEnvironment.PRODUCTION,
   });
 }

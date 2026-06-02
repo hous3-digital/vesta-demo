@@ -194,7 +194,11 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
     kycIframe.src = '';
 
     try {
-      const hasVC = await sdk.hasStoredCredential();
+      // Usa hasRegisteredCredential (em vez de hasStoredCredential) para
+      // evitar tratar como "VC existente" um vcHash que está no Passkey local
+      // mas não no backend do ambiente atual — ex.: usuário enrolou contra
+      // staging/testnet e agora abre o demo apontando para produção/mainnet.
+      const hasVC = await sdk.hasRegisteredCredential();
       if (hasVC) {
         kycHasVcSection.classList.remove('hidden');
       } else {
