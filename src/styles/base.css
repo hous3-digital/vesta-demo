@@ -355,6 +355,42 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   height: 100%;
 }
 
+/* ── Iframe fullscreen mode em telas pequenas ────────────────────────────
+   Em viewports estreitas ou baixas o card de 420px não dá espaço suficiente
+   para a SPA do IdCerberus respirar — o conteúdo interno fica cortado e
+   sem scroll. Aqui quebramos o card e deixamos o iframe ocupar 100dvh. */
+@media (max-width: 768px), (max-height: 720px) {
+  #screen-kyc.kyc-iframe-active {
+    padding: 0;
+  }
+
+  .kyc-iframe-active .screen-inner {
+    max-width: none;
+    width: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
+  }
+
+  .kyc-iframe-active .screen-header {
+    padding: 10px 14px;
+    margin-bottom: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .kyc-iframe-active .kyc-iframe-wrapper {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .kyc-iframe-active #kyc-iframe-section .screen-cta {
+    padding: 8px 14px 12px;
+    margin-top: 0 !important;
+    background: var(--bg);
+  }
+}
+
 /* Skip KYC (demo) button */
 .btn-secondary {
   width: 100%;
