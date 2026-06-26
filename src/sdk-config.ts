@@ -31,6 +31,6 @@ export function createSDK(issuerId: string): VestaSDK {
   return new VestaSDK({
     apiKey: API_KEY,
     issuerId,
-    environment: VestaEnvironment.PRODUCTION,
+    environment: VestaEnvironment.STAGING,
   });
 }
