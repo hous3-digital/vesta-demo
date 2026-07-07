@@ -1,7 +1,7 @@
 import { createSDK } from './sdk-config';
 import { initEnrollmentFlow } from './enrollment';
 
-const sdk = createSDK('trove_demo');
+const sdk = createSDK();
 
 initEnrollmentFlow({
   sdk,
