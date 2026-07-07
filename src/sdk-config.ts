@@ -18,19 +18,17 @@ if (!API_KEY) {
 /**
  * Cria uma instância configurada do VestaSDK para o ambiente de demo.
  *
- * @param issuerId - ID do integrador (banco/seguradora) enviado no header
- *   `X-Vesta-Issuer-ID`. Ex: "brava" ou "trove".
+ * A API key identifica o issuer no backend. O demo não envia issuerId.
  * @returns Instância pronta para uso.
  *
  * @example
  * import { createSDK } from './sdk-config';
- * const sdk = createSDK('brava');
+ * const sdk = createSDK();
  * const hasVC = await sdk.hasStoredCredential();
  */
-export function createSDK(issuerId: string): VestaSDK {
+export function createSDK(): VestaSDK {
   return new VestaSDK({
     apiKey: API_KEY,
-    issuerId,
     environment: VestaEnvironment.STAGING,
   });
 }
