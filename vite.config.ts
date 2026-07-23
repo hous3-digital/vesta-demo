@@ -8,6 +8,7 @@ export default defineConfig({
         main: path.resolve(__dirname, 'index.html'),
         client1: path.resolve(__dirname, 'client1/index.html'),
         client2: path.resolve(__dirname, 'client2/index.html'),
+        client3: path.resolve(__dirname, 'client3/index.html'),
       },
     },
   },
