@@ -118,6 +118,7 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
   let savedFullName  = '';
   let savedCpf       = '';
   let savedBirthDate = '';
+  let enrollmentMode: 'auto' | 'authenticate' = 'auto';
 
   // ─── Navigation helpers ──────────────────────────────────────────────────
 
@@ -192,6 +193,11 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
 
     // Clear iframe src when not in use
     kycIframe.src = '';
+
+    if (enrollmentMode === 'authenticate') {
+      kycHasVcSection.classList.remove('hidden');
+      return;
+    }
 
     try {
       // Usa hasRegisteredCredential (em vez de hasStoredCredential) para
@@ -287,6 +293,7 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
       },
       verifierId: config.verifierId,
       minKycLevel: config.minKycLevel,
+      mode: enrollmentMode,
     });
   }
 
@@ -294,11 +301,13 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
 
   // Welcome → Form
   btnCreateAccount.addEventListener('click', () => {
+    enrollmentMode = 'auto';
     showScreen('form');
   });
 
   if (btnSignIn) {
     btnSignIn.addEventListener('click', () => {
+      enrollmentMode = 'authenticate';
       showScreen('form');
     });
   }
