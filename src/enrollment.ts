@@ -93,6 +93,8 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
   const btnStartVerif      = document.getElementById('btn-start-verification') as HTMLButtonElement;
   const btnSkipKyc         = document.getElementById('btn-skip-kyc')           as HTMLButtonElement;
   const btnSkipKycDemo     = document.getElementById('btn-skip-kyc-demo')      as HTMLButtonElement;
+  const retryPasskeyActions = document.getElementById('passkey-retry-actions') as HTMLDivElement;
+  const btnRetryPasskey     = document.getElementById('btn-retry-passkey')     as HTMLButtonElement;
 
   // KYC animation steps
   const kycStep1 = document.getElementById('kyc-step-1') as HTMLDivElement;
@@ -143,6 +145,7 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
 
   function hideError(): void {
     elErrorBanner.classList.add('hidden');
+    retryPasskeyActions.classList.add('hidden');
   }
 
   // ─── KYC animation helpers ───────────────────────────────────────────────
@@ -235,9 +238,10 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
       showSuccess(result);
     } catch (err) {
       kycAnimSection.classList.add('hidden');
-      kycNewSection.classList.remove('hidden');
-      const msg = err instanceof Error ? err.message : 'Unknown error.';
-      showError(msg);
+      const canRetryPasskey = sdk.hasPendingPasskeyRegistration();
+      kycNewSection.classList.toggle('hidden', canRetryPasskey);
+      showError(resolveErrorMessage(err));
+      retryPasskeyActions.classList.toggle('hidden', !canRetryPasskey);
     }
   }
 
@@ -430,6 +434,30 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
   // Skip KYC (demo fallback) — proceeds without real KYC
   btnSkipKycDemo.addEventListener('click', async () => {
     onKycComplete();
+  });
+
+  // Retoma apenas a ceremony — a VC já emitida não é criada novamente.
+  btnRetryPasskey.addEventListener('click', async () => {
+    btnRetryPasskey.disabled = true;
+    const originalContent = btnRetryPasskey.innerHTML;
+    btnRetryPasskey.innerHTML = '<div class="spinner"></div> Creating a new Passkey…';
+    elErrorBanner.classList.add('hidden');
+
+    try {
+      const registration = await sdk.retryPasskeyRegistration();
+      showSuccess({
+        authenticated: true,
+        isNewUser: true,
+        vcHash: registration.vcHash,
+        mock: false,
+      });
+    } catch (err) {
+      showError(resolveErrorMessage(err));
+      retryPasskeyActions.classList.remove('hidden');
+    } finally {
+      btnRetryPasskey.disabled = false;
+      btnRetryPasskey.innerHTML = originalContent;
+    }
   });
 
   // Skip KYC (has-VC path)
