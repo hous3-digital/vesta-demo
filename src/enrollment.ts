@@ -110,6 +110,10 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
   const elTypeBadge       = document.getElementById('type-badge')       as HTMLSpanElement;
   const elTxRow           = document.getElementById('tx-row')           as HTMLDivElement;
   const elTxHash          = document.getElementById('tx-hash')          as HTMLSpanElement;
+  const elIssuerStatusRow = document.getElementById('issuer-status-row') as HTMLDivElement;
+  const elIssuerStatus    = document.getElementById('issuer-status')     as HTMLSpanElement;
+  const elIssuerDidRow    = document.getElementById('issuer-did-row')    as HTMLDivElement;
+  const elIssuerDid       = document.getElementById('issuer-did')        as HTMLSpanElement;
   const elMockRow         = document.getElementById('mock-row')         as HTMLDivElement;
   const elErrorBanner     = document.getElementById('error-banner')     as HTMLDivElement;
   const elErrorMessage    = document.getElementById('error-message')    as HTMLSpanElement;
@@ -266,6 +270,8 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
       elTxRow.classList.add('hidden');
     }
 
+    showIssuerRegistry(result);
+
     if (result.mock) {
       elMockRow.classList.remove('hidden');
     } else {
@@ -273,6 +279,44 @@ export function initEnrollmentFlow(config: EnrollmentConfig): void {
     }
 
     showScreen('success');
+  }
+
+  /**
+   * Uma attestation só existe depois de uma validação on-chain de uma VC já
+   * emitida. A consulta é auxiliar: uma indisponibilidade do registry não
+   * invalida uma validação que já foi concluída com sucesso.
+   */
+  function showIssuerRegistry(result: SmartEnrollResult): void {
+    elIssuerStatusRow.classList.add('hidden');
+    elIssuerDidRow.classList.add('hidden');
+
+    if (!result.attestationId) return;
+
+    elIssuerStatusRow.classList.remove('hidden');
+    elIssuerStatus.textContent = 'Checking registry…';
+    elIssuerStatus.className = 'badge badge-yellow';
+
+    void sdk.resolveAttestationIssuer(result.attestationId)
+      .then(({ issuer }) => {
+        const statusLabels: Record<string, string> = {
+          ACTIVE: '✓ Active',
+          SUSPENDED: 'Suspended',
+          NOT_REGISTERED: 'Not registered',
+          DID_NOT_AVAILABLE: 'DID unavailable',
+        };
+        elIssuerStatus.textContent = statusLabels[issuer.registryStatus] ?? issuer.registryStatus;
+        elIssuerStatus.className = issuer.active ? 'badge badge-green' : 'badge badge-yellow';
+
+        if (issuer.did) {
+          elIssuerDid.textContent = issuer.did;
+          elIssuerDid.title = issuer.did;
+          elIssuerDidRow.classList.remove('hidden');
+        }
+      })
+      .catch(() => {
+        elIssuerStatus.textContent = 'Registry unavailable';
+        elIssuerStatus.className = 'badge badge-yellow';
+      });
   }
 
   // ─── smartEnroll call ─────────────────────────────────────────────────────
