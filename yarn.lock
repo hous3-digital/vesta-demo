@@ -117,10 +117,10 @@
   resolved "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.21.5.tgz"
   integrity sha512-tQd/1efJuzPC6rCFwEvLtci/xNFcTZknmXs98FYDfGE4wP9ClFV98nyKrzJKVPMhdDnjzLhdUyMX4PsQAPjwIw==
 
-"@hous3-digital/vesta-sdk@2.6.0":
-  version "2.6.0"
-  resolved "https://registry.npmjs.org/@hous3-digital/vesta-sdk/-/vesta-sdk-2.6.0.tgz"
-  integrity sha512-HW9C7Om0orE2EFbVc4wD29xprrSzgUlVBD8jZoLlzZI24RtKXN5eSoT3xfzpnbe2wCd4lHlsPDn6l8Od3TSxew==
+"@hous3-digital/vesta-sdk@2.6.1":
+  version "2.6.1"
+  resolved "https://registry.npmjs.org/@hous3-digital/vesta-sdk/-/vesta-sdk-2.6.1.tgz"
+  integrity sha512-7ypRta6uru6vNfj+sLMcyKy2rK6LSN5pg6KS1Y3ybL76WBr6U9Akv9FktMuLl36FZ6BN18Ww4qcUL483xnX4ow==
   dependencies:
     "@stellar/stellar-sdk" "16.2.0"
 
